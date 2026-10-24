@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d14">
+<title>IRON MAN AI — STARK SYSTEMS</title>
+<style>
+:root{--bg:#080b11;--panel:#101722;--line:#253445;--red:#ff453a;--gold:#ffbd4a;--cyan:#65e7ff;--txt:#edf5ff;--muted:#8fa2b8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#182739 0,#080b11 48%);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.wrap{max-width:850px;margin:auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:8px 0 16px}.brand{font-weight:900;letter-spacing:2px}.brand span{color:var(--red)}.status{font-size:12px;color:var(--cyan);border:1px solid #254b5a;border-radius:99px;padding:7px 10px}
+.hero{text-align:center;padding:24px 0 18px}.reactor{width:128px;height:128px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#f4ffff 0 7%,#66eaff 9% 17%,#167ea1 20%,#122c45 40%,#080b11 61%);box-shadow:0 0 20px #45dfff99,0 0 55px #137da855,inset 0 0 20px #65e7ff66;animation:pulse 2.2s ease-in-out infinite}.reactor:after{content:"STARK";font-size:11px;font-weight:900;letter-spacing:3px;color:#d9fbff;text-shadow:0 0 8px #4de7ff}.hero h1{font-size:clamp(26px,6vw,42px);margin:0;letter-spacing:3px}.hero p{margin:8px 0;color:var(--muted);font-size:13px;letter-spacing:1px}
+@keyframes pulse{50%{transform:scale(1.035);filter:brightness(1.2)}}
+.panel{background:#101722eF;border:1px solid var(--line);border-radius:18px;padding:15px;margin:12px 0;box-shadow:0 12px 35px #0004}.panel-title{font-size:12px;color:var(--gold);letter-spacing:1.8px;font-weight:800;margin-bottom:12px}.chat{height:260px;overflow:auto;display:flex;flex-direction:column;gap:10px}.bubble{padding:11px 13px;border-radius:13px;max-width:92%;white-space:pre-wrap;line-height:1.45;font-size:14px}.ai{background:#162535;border:1px solid #28445a;align-self:flex-start}.user{background:#3a1b20;border:1px solid #79343a;align-self:flex-end}.composer{display:flex;gap:8px;margin-top:12px}.composer input{min-width:0;flex:1;background:#080d14;color:white;border:1px solid #2a3a4d;border-radius:12px;padding:13px;font-size:15px;outline:none}.btn{border:1px solid #41566b;border-radius:12px;padding:11px 13px;background:#172332;color:var(--txt);font-weight:750;cursor:pointer}.btn:active{transform:scale(.98)}.primary{background:linear-gradient(135deg,#b51f2b,#f04a39);border-color:#ff6557}.gold{border-color:#8b672d;color:#ffcf72}.row{display:flex;flex-wrap:wrap;gap:8px}.small{font-size:12px;color:var(--muted);line-height:1.5}.field{width:100%;background:#080d14;color:white;border:1px solid #2a3a4d;border-radius:10px;padding:11px;margin:5px 0 10px}.toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:#c8d6e5}.footer{text-align:center;color:#64758a;font-size:11px;padding:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><div class="brand">STARK <span>///</span> AI</div><div class="status" id="status">SYSTEM ONLINE · LOCAL MODE</div></header>
+  <section class="hero"><div class="reactor"></div><h1>IRON MAN AI</h1><p>PERSONAL ASSISTANT • STARK SYSTEMS</p></section>
+  <section class="panel">
+    <div class="panel-title">AI CONSOLE</div>
+    <div class="chat" id="chat" aria-live="polite"><div class="bubble ai">Namaste! Main Iron Man AI hoon. Backend connect hone par main intelligent answers de sakta hoon. Abhi voice aur interface test kar sakte ho.</div></div>
+    <form id="form" class="composer"><input id="message" autocomplete="off" placeholder="Ask me anything..." aria-label="Message"><button class="btn primary" type="submit">SEND</button></form>
+    <div class="row" style="margin-top:10px"><button class="btn gold" id="mic">🎙 Speak Hindi</button><button class="btn" id="repeat">🔊 Read last reply</button><button class="btn" id="clear">Clear chat</button></div>
+    <label class="toggle" style="margin-top:12px"><input id="speakAuto" type="checkbox" checked> Automatically speak AI replies</label>
+    <p class="small" id="voiceStatus">Voice uses your browser's speech features. Results depend on browser and available Hindi voices.</p>
+  </section>
+  <section class="panel">
+    <div class="panel-title">STUDY MODULE</div>
+    <div class="row"><button class="btn" data-prompt="Explain pharmaceutical microbiology preservatives in simple English with a 10-mark exam answer.">B.Pharm · Microbiology</button><button class="btn" data-prompt="Explain pharmaceutical analysis basics for a B.Pharm student, with examples.">Pharmaceutical Analysis</button><button class="btn" data-prompt="Help me make concise B.Pharm revision notes. Ask me which subject and unit if needed.">Revision Notes</button></div>
+  </section>
+  <section class="panel">
+    <div class="panel-title">SECURE AI BACKEND</div>
+    <label class="small" for="apiBase">Backend URL (example: https://your-app.example.com)</label>
+    <input class="field" id="apiBase" placeholder="Paste your deployed backend URL">
+    <div class="row"><button class="btn gold" id="saveBackend">Save backend URL</button><button class="btn" id="testBackend">Test connection</button></div>
+    <p class="small">This page stores only the backend URL in this browser. Never paste an AI provider secret/API key here. Add the secret only to your backend host's environment variables.</p>
+    <div class="small" id="backendStatus">Backend not configured.</div>
+  </section>
+  <div class="footer">IRON MAN AI • Unofficial fan-made assistant • Not affiliated with Marvel or Tony Stark</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let lastReply="Namaste! Main Iron Man AI hoon.";
+const addBubble=(text,who)=>{const d=document.createElement('div');d.className='bubble '+who;d.textContent=text;$('chat').appendChild(d);$('chat').scrollTop=$('chat').scrollHeight;return d};
+function speak(text){
+  if(!('speechSynthesis' in window)){ $('voiceStatus').textContent='Is browser mein speech playback supported nahi hai.';return; }
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);u.lang='hi-IN';u.rate=0.94;u.pitch=0.92;
+  const voices=speechSynthesis.getVoices();const hindi=voices.find(v=>/^hi(-|_)?/i.test(v.lang))||voices.find(v=>/hindi/i.test(v.name));
+  if(hindi)u.voice=hindi;
+  u.onerror=()=>{$('voiceStatus').textContent='Voice playback failed. Phone volume aur browser voice settings check karo.'};
+  speechSynthesis.speak(u);
+}
+$('repeat').onclick=()=>speak(lastReply);
+$('clear').onclick=()=>{$('chat').innerHTML='';addBubble('Chat cleared. Bolo, main sun raha hoon.','ai')};
+function getBase(){return $('apiBase').value.trim().replace(/\/+$/,'')}
+$('saveBackend').onclick=()=>{const b=getBase();if(!b){$('backendStatus').textContent='Pehle backend URL paste karo.';return}localStorage.setItem('starkBackendUrl',b);$('backendStatus').textContent='Backend URL saved on this browser.';$('status').textContent='BACKEND URL SAVED'};
+$('apiBase').value=localStorage.getItem('starkBackendUrl')||'';
+if($('apiBase').value)$('backendStatus').textContent='Backend URL saved. Tap Test connection.';
+$('testBackend').onclick=async()=>{const b=getBase();if(!b){$('backendStatus').textContent='Pehle backend URL paste karo.';return}
+  $('backendStatus').textContent='Testing…';
+  try{const r=await fetch(b+'/health');const j=await r.json();if(!r.ok)throw Error(j.error||'HTTP '+r.status);$('backendStatus').textContent='Connected: '+(j.status||'OK');$('status').textContent='STARK BACKEND CONNECTED'}
+  catch(e){$('backendStatus').textContent='Connection failed: '+e.message+' — URL/deployment/CORS check karo.'}
+};
+async function sendMessage(text){
+  text=(text||'').trim();if(!text)return;
+  addBubble(text,'user');$('message').value='';const base=getBase();
+  if(!base){lastReply='Abhi backend connect nahi hua hai. Backend URL set karo. Tab tak main voice input aur interface test mode mein hoon.';addBubble(lastReply,'ai');if($('speakAuto').checked)speak(lastReply);return}
+  const loading=addBubble('Stark AI is thinking…','ai');$('status').textContent='PROCESSING';
+  try{
+    const r=await fetch(base+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});
+    const data=await r.json();if(!r.ok)throw Error(data.error||'Request failed ('+r.status+')');
+    lastReply=data.reply||'Server ne empty reply diya.';loading.textContent=lastReply;
+    if($('speakAuto').checked)speak(lastReply);$('status').textContent='STARK AI READY';
+  }catch(e){lastReply='Backend se jawab nahi mila: '+e.message;loading.textContent=lastReply;$('status').textContent='CONNECTION ERROR'}
+}
+$('form').addEventListener('submit',e=>{e.preventDefault();sendMessage($('message').value)});
+document.querySelectorAll('[data-prompt]').forEach(b=>b.onclick=()=>{ $('message').value=b.dataset.prompt;sendMessage(b.dataset.prompt)});
+$('mic').onclick=()=>{
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){$('voiceStatus').textContent='Speech recognition is not supported in this browser. Try a supported browser and allow microphone permission.';return}
+  const rec=new SR();rec.lang='hi-IN';rec.interimResults=false;rec.maxAlternatives=1;
+  $('voiceStatus').textContent='Sun raha hoon… ab Hindi mein bolo.';
+  rec.onresult=e=>{const t=e.results[0][0].transcript;$('message').value=t;$('voiceStatus').textContent='Heard: '+t;sendMessage(t)};
+  rec.onerror=e=>$('voiceStatus').textContent='Mic error: '+e.error+'. Microphone permission and browser support check karo.';
+  rec.onend=()=>{if($('voiceStatus').textContent==='Sun raha hoon… ab Hindi mein bolo.')$('voiceStatus').textContent='Voice listening ended.'};
+  rec.start();
+};
+if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{};
+</script>
+</body>
+</html>
