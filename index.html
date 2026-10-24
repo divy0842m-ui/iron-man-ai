@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#090d14">
+  <link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
 <title>IRON MAN AI — STARK SYSTEMS</title>
 <style>
 :root{--bg:#080b11;--panel:#101722;--line:#253445;--red:#ff453a;--gold:#ffbd4a;--cyan:#65e7ff;--txt:#edf5ff;--muted:#8fa2b8}
@@ -14,6 +16,15 @@
 .panel{background:#101722eF;border:1px solid var(--line);border-radius:18px;padding:15px;margin:12px 0;box-shadow:0 12px 35px #0004}.panel-title{font-size:12px;color:var(--gold);letter-spacing:1.8px;font-weight:800;margin-bottom:12px}.chat{height:260px;overflow:auto;display:flex;flex-direction:column;gap:10px}.bubble{padding:11px 13px;border-radius:13px;max-width:92%;white-space:pre-wrap;line-height:1.45;font-size:14px}.ai{background:#162535;border:1px solid #28445a;align-self:flex-start}.user{background:#3a1b20;border:1px solid #79343a;align-self:flex-end}.composer{display:flex;gap:8px;margin-top:12px}.composer input{min-width:0;flex:1;background:#080d14;color:white;border:1px solid #2a3a4d;border-radius:12px;padding:13px;font-size:15px;outline:none}.btn{border:1px solid #41566b;border-radius:12px;padding:11px 13px;background:#172332;color:var(--txt);font-weight:750;cursor:pointer}.btn:active{transform:scale(.98)}.primary{background:linear-gradient(135deg,#b51f2b,#f04a39);border-color:#ff6557}.gold{border-color:#8b672d;color:#ffcf72}.row{display:flex;flex-wrap:wrap;gap:8px}.small{font-size:12px;color:var(--muted);line-height:1.5}.field{width:100%;background:#080d14;color:white;border:1px solid #2a3a4d;border-radius:10px;padding:11px;margin:5px 0 10px}.toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:#c8d6e5}.footer{text-align:center;color:#64758a;font-size:11px;padding:18px}
 </style>
 </head>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(() => console.log("IRON MAN AI PWA ready"))
+      .catch(err => console.error("PWA error:", err));
+  });
+}
+</script>
 <body>
 <div class="wrap">
   <header class="top"><div class="brand">STARK <span>///</span> AI</div><div class="status" id="status">SYSTEM ONLINE · LOCAL MODE</div></header>
@@ -47,7 +58,7 @@ const addBubble=(text,who)=>{const d=document.createElement('div');d.className='
 function speak(text){
   if(!('speechSynthesis' in window)){ $('voiceStatus').textContent='Is browser mein speech playback supported nahi hai.';return; }
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);u.lang='hi-IN';u.rate=0.94;u.pitch=0.92;
+  const u=new SpeechSynthesisUtterance(text);u.lang='hi-IN';u.rate=0.88;u.pitch=0.65;
   const voices=speechSynthesis.getVoices();const hindi=voices.find(v=>/^hi(-|_)?/i.test(v.lang))||voices.find(v=>/hindi/i.test(v.name));
   if(hindi)u.voice=hindi;
   u.onerror=()=>{$('voiceStatus').textContent='Voice playback failed. Phone volume aur browser voice settings check karo.'};
