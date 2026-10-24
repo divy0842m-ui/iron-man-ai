@@ -68,7 +68,7 @@ $('repeat').onclick=()=>speak(lastReply);
 $('clear').onclick=()=>{$('chat').innerHTML='';addBubble('Chat cleared. Bolo, main sun raha hoon.','ai')};
 function getBase(){return $('apiBase').value.trim().replace(/\/+$/,'')}
 $('saveBackend').onclick=()=>{const b=getBase();if(!b){$('backendStatus').textContent='Pehle backend URL paste karo.';return}localStorage.setItem('starkBackendUrl',b);$('backendStatus').textContent='Backend URL saved on this browser.';$('status').textContent='BACKEND URL SAVED'};
-$('apiBase').value=localStorage.getItem('starkBackendUrl')||'';
+$('apiBase').value='https://iron-man-ai.onrender.com';
 if($('apiBase').value)$('backendStatus').textContent='Backend URL saved. Tap Test connection.';
 $('testBackend').onclick=async()=>{const b=getBase();if(!b){$('backendStatus').textContent='Pehle backend URL paste karo.';return}
   $('backendStatus').textContent='Testing…';
